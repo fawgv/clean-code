@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ControlDigit
@@ -7,7 +8,21 @@ namespace ControlDigit
     {
         public static int CalculateSnils(this long number)
         {
-            throw new NotImplementedException();
+            return number
+                       .GetDigitsFromLowToHigh()
+                       .Select((digit, index) => digit * (index + 1))
+                       .Sum()
+                   % 101
+                   % 100;
+        }
+
+        public static IEnumerable<int> GetDigitsFromLowToHigh(this long number)
+        {
+            do
+            {
+                yield return (int)(number % 10);
+                number /= 10;
+            } while (number > 0);
         }
     }
 }
